@@ -93,11 +93,13 @@ function imageboardPaging(pg){
 													text: items.imagePrice*items.imageQty
 													}))
 								.appendTo($('#imageboardListTable'));
-					
-				$('.'+items.seq).click(function(){
-					location.href='/springProject/imageboard/imageboardView?seq='+items.seq+"&pg="+data.pg;
-					
-				});
+					//이미지 보기
+					$('.'+items.seq).click(function(){
+						location.href='/springProject/imageboard/imageboardView?seq='+items.seq+"&pg="+data.pg;
+						
+					});
+					//페이징 처리
+					$('#imageboardPagingDiv').html(data.imageboardPaging.pagingHTML);z
 				});//each
 			}
 		});
