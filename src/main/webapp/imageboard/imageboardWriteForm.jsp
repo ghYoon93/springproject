@@ -8,8 +8,10 @@
 	margin: 20px;
 }
 </style>
-<form name="imageboardWriteForm" method="post"
-	enctype="multipart/form-data" action="../imageboard/imageboardWrite.do">
+<!-- <form name="imageboardWriteForm" method="post"
+	enctype="multipart/form-data" action="../imageboard/imageboardWrite.do"> -->
+<form name="imageboardWriteForm"
+	enctype="multipart/form-data">
 	<table class="imgTable">
 		<tr>
 			<td width="70">상품코드</td>
@@ -47,15 +49,20 @@
 		</tr>
 
 		<tr>
-			<td colspan="2"><input type="file" name="image1" id="image1"
+			<td colspan="2"><input type="file" name="img" id="image1"
 				size="50">
 				<div id="image1Div"></div></td>
+			
 		</tr>
-
+		<tr>
+		<td colspan="2"><input type="file" name="img" id="image2"
+				size="50">
+				<div id="image2Div"></div></td>
+		</tr>
 		<tr>
 			<td colspan="2" align="center"><input
-				id="imageboardWriteFormBtn" type="button" value="이미지등록"> <input
-				type="reset" value="다시작성"></td>
+				id="imageboardWriteFormBtn" type="button" value="이미지등록"> 
+				<input type="reset" value="다시작성"></td>
 		</tr>
 	</table>
 </form>
@@ -100,15 +107,23 @@ $('#imageboardWriteFormBtn').click(function(){
 		$('#image1Div').css('color','red');
 		$('#image1Div').css('font-size','8pt');
 		$('#image1Div').css('font-weight','bold');
+	}else if($('#image2').val() == ''){
+		$('#image2Div').text('이미지 파일이 없습니다');
+		$('#image2Div').css('color','red');
+		$('#image2Div').css('font-size','8pt');
+		$('#image2Div').css('font-weight','bold');
 	}else
 		//$('form[name=imageboardWriteForm]').submit();
+		var formData = new FormData($('#imageboardWriteForm')[0])
 		$.ajax({
-			type: 'post'
+			type: 'post',
 			enctype: 'multipart/form-data',
-			url: 'springProject/imageboard/imageboardWrite',
-			data: $('#imageboardWriteForm').serialize(),
+			processData: false, //데이터를 컨텐트 타입에 맞게 변환 여부
+			contentType: false, // 요청 컨텐트 타입
+			url: '/springProject/imageboard/imageboardWrite',
+			data: formData,
 			success: function(){
-				
+				alert('이미지 등록 완료');
 			}
 		});
 	
