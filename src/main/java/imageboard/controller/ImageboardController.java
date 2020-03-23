@@ -21,6 +21,7 @@ import imageboard.bean.ImageboardDTO;
 @Controller
 @RequestMapping(value="imageboard")
 public class ImageboardController {
+	private ImageboardService imageboardService;
 	@RequestMapping(value="imageboardWriteForm", method=RequestMethod.GET)
 	public String imageboardWriteForm(Model model) {
 		model.addAttribute("display","/imageboard/imageboardWriteForm.jsp");

@@ -60,6 +60,11 @@
 				<div id="image2Div"></div></td>
 		</tr>
 		<tr>
+		<td colspan="2"><input type="file" name="img[]" id="image3"
+				size="50" multiple>
+				<div id="image2Div"></div></td>
+		</tr>
+		<tr>
 			<td colspan="2" align="center"><input
 				id="imageboardWriteFormBtn" type="button" value="이미지등록"> 
 				<input type="reset" value="다시작성"></td>
