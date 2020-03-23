@@ -1,62 +1,61 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 <style type="text/css">
-.imgTable{
+.imgTable {
 	width: 600px;
 	height: 150px;
 	margin: 20px;
 }
 </style>
-<form name="imageboardWriteForm" method="post" enctype="multipart/form-data" action="../imageboard/imageboardWrite.do">
+<form name="imageboardWriteForm" method="post"
+	enctype="multipart/form-data" action="../imageboard/imageboardWrite.do">
 	<table class="imgTable">
 		<tr>
 			<td width="70">상품코드</td>
-			<td><input type="text" name="imageId" id="imageId" size="40" value="img_">
-				<div id="imageIdDiv"></div>
-			</td>
+			<td><input type="text" name="imageId" id="imageId" size="40"
+				value="img_">
+				<div id="imageIdDiv"></div></td>
 		</tr>
 
 		<tr>
 			<td width="70">상품명</td>
-			<td><input type="text" name="imageName" id="imageName" size="50" placeholder="상품명 입력">
-				<div id="imageNameDiv"></div>
-			</td>
+			<td><input type="text" name="imageName" id="imageName" size="50"
+				placeholder="상품명 입력">
+				<div id="imageNameDiv"></div></td>
 		</tr>
 
 		<tr>
 			<td width="70">단가</td>
-			<td><input type="text" name="imagePrice" id="imagePrice" size="30" placeholder="단가 입력">
-				<div id="imagePriceDiv"></div>
-			</td>
+			<td><input type="text" name="imagePrice" id="imagePrice"
+				size="30" placeholder="단가 입력">
+				<div id="imagePriceDiv"></div></td>
 		</tr>
 
 		<tr>
 			<td width="70">개수</td>
-			<td><input type="text" name="imageQty" id="imageQty" size="30" placeholder="개수 입력">
-				<div id="imageQtyDiv"></div>
-			</td>
+			<td><input type="text" name="imageQty" id="imageQty" size="30"
+				placeholder="개수 입력">
+				<div id="imageQtyDiv"></div></td>
 		</tr>
 
 		<tr>
 			<td width="70">내용</td>
-			<td><textarea name="imageContent" id="imageContent" rows="15" cols="50" placeholder="내용 입력"></textarea>
-				<div id="imageContentDiv"></div>
-			</td>
+			<td><textarea name="imageContent" id="imageContent" rows="15"
+					cols="50" placeholder="내용 입력"></textarea>
+				<div id="imageContentDiv"></div></td>
 		</tr>
 
 		<tr>
-			<td colspan="2">
-				<input type="file" name="image1" id="image1" size="50">
-				<div id="image1Div"></div>
-			</td>
+			<td colspan="2"><input type="file" name="image1" id="image1"
+				size="50">
+				<div id="image1Div"></div></td>
 		</tr>
 
 		<tr>
-			<td colspan="2" align="center">
-				<input id="imageboardWriteFormBtn" type="button" value="이미지등록">
-				<input type="reset" value="다시작성">
-			</td>
+			<td colspan="2" align="center"><input
+				id="imageboardWriteFormBtn" type="button" value="이미지등록"> <input
+				type="reset" value="다시작성"></td>
 		</tr>
 	</table>
 </form>
@@ -102,7 +101,16 @@ $('#imageboardWriteFormBtn').click(function(){
 		$('#image1Div').css('font-size','8pt');
 		$('#image1Div').css('font-weight','bold');
 	}else
-		$('form[name=imageboardWriteForm]').submit();
+		//$('form[name=imageboardWriteForm]').submit();
+		$.ajax({
+			type: 'post'
+			enctype: 'multipart/form-data',
+			url: 'springProject/imageboard/imageboardWrite',
+			data: $('#imageboardWriteForm').serialize(),
+			success: function(){
+				
+			}
+		});
 	
 });
 </script>
