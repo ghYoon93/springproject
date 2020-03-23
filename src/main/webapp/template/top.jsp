@@ -24,7 +24,7 @@ onclick="location.href='/springProject/main/index'" style="cursor: pointer;"> MV
 <c:if test="${memId!=null && memId=='admin'}">
 	<a href="/springProject/imageboard/imageboardWriteForm">이미지등록</a>&emsp;
 </c:if>
-<a href="/springProject/imageboard/imageboardList?pg=1">이미지목록</a>&emsp;
+<a href="/springProject/imageboard/imageboardList">이미지목록</a>&emsp;
 </div>
 
 

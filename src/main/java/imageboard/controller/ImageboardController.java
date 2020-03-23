@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -15,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.service.ImageboardService;
 
 @Controller
 @RequestMapping(value="imageboard")
 public class ImageboardController {
+	@Autowired
 	private ImageboardService imageboardService;
 	@RequestMapping(value="imageboardWriteForm", method=RequestMethod.GET)
 	public String imageboardWriteForm(Model model) {
@@ -102,5 +106,22 @@ public class ImageboardController {
 				e.printStackTrace();
 			}
 		}
+		imageboardService.imageboardWrite(imageboardDTO);
+	}
+	
+	@RequestMapping(value="imageboardList", method=RequestMethod.GET)
+	public String imageboardList(@RequestParam(required=false, defaultValue="1") String pg, Model model) {
+		model.addAttribute("pg",pg);
+		model.addAttribute("display", "/imageboard/imageboardList.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="getImageboardList", method=RequestMethod.POST)
+	public ModelAndView getImageboardList(@RequestParam(required=false, defaultValue="1")String pg) {
+		List<ImageboardDTO> list = imageboardService.getImageBoardList(pg);
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("list", list);
+		mav.setViewName("jsonView");
+		return mav;
 	}
 }
