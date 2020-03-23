@@ -8,13 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardPaging;
 import imageboard.dao.ImageboardDAO;
 
 @Service
 public class ImageboardServiceImpl implements ImageboardService{
 	@Autowired
     private ImageboardDAO imageboardDAO;
-
+	@Autowired
+	private ImageboardPaging imageboardPaging;
 	@Override
 	public void imageboardWrite(ImageboardDTO imageboardDTO) {
 		imageboardDAO.imageboardWrite(imageboardDTO);
@@ -30,4 +32,31 @@ public class ImageboardServiceImpl implements ImageboardService{
 		map.put("endNum", endNum);
 		return imageboardDAO.getImageboardList(map);
 	}
+
+	@Override
+	public ImageboardDTO getImageBoardView(String seq) {
+		return imageboardDAO.getImageBoardView(seq);
+	}
+
+	@Override
+	public void imageboardDelete(String[] check) {
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("array",check);
+		imageboardDAO.imageboardDelete(map);
+		
+	}
+
+	@Override
+	public ImageboardPaging imageboardPaging(String pg) {
+		int totalA = imageboardDAO.getImageboardTotalA();
+		imageboardPaging.setCurrentPage(Integer.parseInt(pg));
+		imageboardPaging.setPageBlock(3);
+		imageboardPaging.setPageSize(3);
+		imageboardPaging.setTotalA(totalA);
+		imageboardPaging.makePagingHTML();
+		
+		return imageboardPaging;
+	}
+
+	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import imageboard.bean.ImageboardDTO;
+import imageboard.bean.ImageboardPaging;
 import imageboard.service.ImageboardService;
 
 @Controller
@@ -26,6 +27,8 @@ import imageboard.service.ImageboardService;
 public class ImageboardController {
 	@Autowired
 	private ImageboardService imageboardService;
+	@Autowired
+	private ImageboardPaging imageboardPaging;
 	@RequestMapping(value="imageboardWriteForm", method=RequestMethod.GET)
 	public String imageboardWriteForm(Model model) {
 		model.addAttribute("display","/imageboard/imageboardWriteForm.jsp");
@@ -119,9 +122,38 @@ public class ImageboardController {
 	@RequestMapping(value="getImageboardList", method=RequestMethod.POST)
 	public ModelAndView getImageboardList(@RequestParam(required=false, defaultValue="1")String pg) {
 		List<ImageboardDTO> list = imageboardService.getImageBoardList(pg);
+		imageboardPaging = imageboardService.imageboardPaging(pg);
 		ModelAndView mav = new ModelAndView();
+		mav.addObject("pg",pg);
 		mav.addObject("list", list);
 		mav.setViewName("jsonView");
 		return mav;
+	}
+	
+	@RequestMapping(value="imageboardView", method=RequestMethod.GET)
+	public String imageboardView(@RequestParam String seq,
+								@RequestParam String pg,
+								Model model) {
+	model.addAttribute("seq", seq);
+	model.addAttribute("pg", pg);
+	model.addAttribute("display", "/imageboard/imageboardView.jsp");
+	return "/main/index";
+	}
+	
+	@RequestMapping(value="getImageboardView", method=RequestMethod.POST)
+	@ResponseBody
+	public ModelAndView getImageboardView(@RequestParam String seq) {
+		ModelAndView mav = new ModelAndView();
+		ImageboardDTO imageboardDTO = imageboardService.getImageBoardView(seq);
+		mav.addObject("imageboardDTO", imageboardDTO);
+		mav.setViewName("jsonView");
+		return mav;
+	}
+	
+	@RequestMapping(value="imageboardDelete", method=RequestMethod.GET)
+	public String imageboardDelete(@RequestParam String[] check, Model model) {
+		imageboardService.imageboardDelete(check);
+		model.addAttribute("display","/imageboard/imageboardDelete.jsp");
+		return "/main/index";
 	}
 }

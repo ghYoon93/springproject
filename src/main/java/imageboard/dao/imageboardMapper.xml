@@ -38,7 +38,7 @@
     SELECT COUNT(*) FROM imageboard
   </select>
   
-  <select id="getImageBoard" parameterType="int" resultMap="imageboard">
+  <select id="getImageBoardView" parameterType="int" resultMap="imageboard">
     SELECT *
       FROM imageboard
      WHERE seq = #{seq}

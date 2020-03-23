@@ -4,6 +4,6 @@
 <script type="text/javascript">
 window.onload=function(){
 	alert("글삭제 완료");
-	location.href='../imageboard/imageboardList.do?pg=1';
+	location.href='../imageboard/imageboardList';
 }
 </script>    

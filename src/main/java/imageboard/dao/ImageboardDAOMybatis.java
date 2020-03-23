@@ -24,7 +24,24 @@ public class ImageboardDAOMybatis implements ImageboardDAO {
 
 	@Override
 	public List<ImageboardDTO> getImageboardList(Map<String, Integer> map) {
-		return sqlSession.selectList("imageboardList.getImageboardList", map);
+		System.out.println(map.get("startNum"));
+		return sqlSession.selectList("imageboardSQL.getImageboardList", map);
 		
+	}
+	@Override
+	public ImageboardDTO getImageBoardView(String seq) {
+		System.out.println(seq);
+		return sqlSession.selectOne("imageboardSQL.getImageBoardView", Integer.parseInt(seq));
+	}
+
+	@Override
+	public void imageboardDelete(Map<String, String[]> map) {
+		sqlSession.delete("imageboardSQL.imageboardDelete", map);
+		
+	}
+
+	@Override
+	public int getImageboardTotalA() {
+		return sqlSession.selectOne("imageboardSQL.getImageboardTotalA");
 	}
 }
