@@ -18,13 +18,25 @@ public class ImageboardDAOMybatis implements ImageboardDAO {
 
 	@Override
 	public void imageboardWrite(ImageboardDTO imageboardDTO) {
-		sqlSession.insert("imageboardSQL.imageboardWrite",imageboardDTO);
-		
+		sqlSession.insert("imageboardSQL.imageboardWrite", imageboardDTO);
 	}
 
 	@Override
 	public List<ImageboardDTO> getImageboardList(Map<String, Integer> map) {
-		return sqlSession.selectList("imageboardList.getImageboardList", map);
-		
+		return sqlSession.selectList("imageboardSQL.getImageboardList", map);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

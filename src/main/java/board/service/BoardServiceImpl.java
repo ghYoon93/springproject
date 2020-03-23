@@ -49,6 +49,21 @@ public class BoardServiceImpl implements BoardService {
 		
 		return list;
 	}
+	
+	@Override
+	public List<BoardDTO> getBoardSearch(Map<String, String> map) {
+		//1페이지당 5개씩
+		int endNum = Integer.parseInt(map.get("pg"))*5;
+		int startNum = endNum-4;
+		
+		//Map안에는 pg, searchOption, keyword
+		map.put("startNum", startNum+"");
+		map.put("endNum", endNum+"");
+		
+		List<BoardDTO> list = boardDAO.getBoardSearch(map);
+		
+		return list;
+	}
 
 	@Override
 	public BoardPaging boardPaging(String pg) {
@@ -59,6 +74,18 @@ public class BoardServiceImpl implements BoardService {
 		boardPaging.setPageSize(5);
 		boardPaging.setTotalA(totalA);
 		boardPaging.makePagingHTML();
+		return boardPaging;
+	}
+	
+	@Override
+	public BoardPaging boardPaging(Map<String, String> map) {
+		int totalA = boardDAO.getBoardSearchTotalA(map);//총글수
+		
+		boardPaging.setCurrentPage(Integer.parseInt(map.get("pg")));
+		boardPaging.setPageBlock(3);
+		boardPaging.setPageSize(5);
+		boardPaging.setTotalA(totalA);
+		boardPaging.makeSearchPagingHTML();
 		return boardPaging;
 	}
 

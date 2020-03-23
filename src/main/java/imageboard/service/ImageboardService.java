@@ -8,6 +8,6 @@ public interface ImageboardService {
 
 	public void imageboardWrite(ImageboardDTO imageboardDTO);
 
-	public List<ImageboardDTO> getImageBoardList(String pg);
+	public List<ImageboardDTO> getImageboardList(String pg);
 
 }

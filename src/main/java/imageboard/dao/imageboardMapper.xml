@@ -1,53 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="imageboardSQL">
-  <resultMap type="imageboard.bean.ImageboardDTO" id="imageboard">
-    <result property="seq" column="SEQ"/>
-    <result property="imageId" column="IMAGEID"/>
-    <result property="imageName" column="IMAGENAME"/>
-    <result property="imagePrice" column="IMAGEPRICE"/>
-    <result property="imageQty" column="IMAGEQTY"/>
-    <result property="imageContent" column="IMAGECONTENT"/>
-    <result property="image1" column="IMAGE1"/>
-    <result property="logtime" column="LOGTIME"/>
-  </resultMap>
-  <insert id="imageboardWrite" parameterType="imageboard">
-    INSERT INTO imageboard VALUES(seq_imageboard.NEXTVAL,
-                                  #{imageId}, 
-                                  #{imageName}, 
-                                  #{imagePrice}, 
-                                  #{imageQty}, 
-                                  #{imageContent}, 
-                                  #{image1},                                   
-                                  SYSDATE)
-  </insert>
-  <select id="getImageboardList" parameterType="java.util.Map" resultMap="imageboard">
-    SELECT * 
-      FROM (SELECT ROWNUM rn, 
-                   tt.* 
-              FROM (SELECT * 
-                      FROM imageboard 
-                     ORDER BY seq DESC)tt)
-             WHERE rn <![CDATA[>=]]> #{startNum}
-                   AND rn <![CDATA[<=]]>#{endNum}
-  </select>
-  
-  <select id="getImageBoardTotalA" resultType="int">
-    SELECT COUNT(*) FROM imageboard
-  </select>
-  
-  <select id="getImageBoard" parameterType="int" resultMap="imageboard">
-    SELECT *
-      FROM imageboard
-     WHERE seq = #{seq}
-  </select>
-  <delete id="delete" parameterType="java.util.Arrays">
-    DELETE FROM imageboard WHERE seq IN
-    <foreach collection="array" item="seq" index="index" separator="," open="(" close=")">
-        #{seq }
-    </foreach>
-
-  </delete>
+	<insert id="imageboardWrite" parameterType="imageboard">
+		INSERT INTO imageboard values(seq_imageboard.nextval
+									, #{imageId}
+									, #{imageName}
+									, #{imagePrice}
+									, #{imageQty}
+									, #{imageContent}
+									, #{image1}
+									, sysdate)
+	</insert>
+	
+	<select id="getImageboardList" parameterType="java.util.Map" resultType="imageboard">
+		<![CDATA[
+		select * from (select rownum rn, tt.* from
+		(select * from imageboard order by seq desc)tt)
+		where rn >= #{startNum} and rn <=#{endNum}]]>
+	</select>
+	
+	<select id="imageboardView" parameterType="int" resultType="imageboard">
+		select * from imageboard where seq=#{seq}
+	</select>
+	
+	<delete id="imageboardDelete" parameterType="int">
+		delete imageboard where seq=#{seq}
+	</delete>
+	
+	<delete id="imageboardDelete2" parameterType="java.util.Map">
+		delete imageboard where seq in
+		<foreach collection="array" item="item" index="i" separator="," open="(" close=")">
+			<!-- #{item} -->
+			${array[i]}
+		</foreach>
+	</delete>
+	
+	<select id="getImageboardTotalA" resultType="int">
+		select count(*) from imageboard
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -25,10 +25,20 @@ public class BoardDAOMybatis implements BoardDAO {
 	public List<BoardDTO> getBoardList(Map<String, Integer> map) {
 		return sqlSession.selectList("boardSQL.getBoardList", map);
 	}
+	
+	@Override
+	public List<BoardDTO> getBoardSearch(Map<String, String> map) {
+		return sqlSession.selectList("boardSQL.getBoardSearch", map);
+	}
 
 	@Override
 	public int getBoardTotalA() {
 		return sqlSession.selectOne("boardSQL.getBoardTotalA");
+	}
+	
+	@Override
+	public int getBoardSearchTotalA(Map<String, String> map) {
+		return sqlSession.selectOne("boardSQL.getBoardSearchTotalA", map);
 	}
 
 	@Override
@@ -40,6 +50,7 @@ public class BoardDAOMybatis implements BoardDAO {
 	public void boardReply(Map<String, String> map) {
 		sqlSession.insert("boardSQL.boardReply", map);	
 	}
+
 }
 
 

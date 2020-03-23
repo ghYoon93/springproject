@@ -20,7 +20,8 @@
 }
 </style>
 
-<input type="hidden" id="pg" value="${pg }">
+<form id="boardListForm">
+<input type="hidden" name="pg" id="pg" value="${pg }">
 <table id="boardListTable" border="1" cellpadding="5" frame="hsides" rules="rows">
 	<tr>
 		<th width="70">글번호</th>
@@ -33,9 +34,26 @@
 
 <div id="boardPagingDiv" style="display:inline-block; width: 700px; text-align: center;"></div>
 
+<br><br>
+
+ <div style="text-align: center;">
+ 	<select name="searchOption" id="searchOption" style="width: 80px;">
+		<option value="subject">제목
+		<option value="id">아이디
+	</select>
+	<input type="text" name="keyword" value="${keyword }">
+	<input type="button" id="boardSearchBtn" value="검색">
+ </div>
+</form>
+
 <script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="../js/boardList.js"></script>
-
+<script type="text/javascript">
+function boardSearch(pg){
+	$('#pg').val(pg);
+	$('#boardSearchBtn').trigger('click');
+}
+</script>
 
 
 

@@ -60,3 +60,64 @@ $(document).ready(function(){
 		}
 	});
 });
+
+$('#boardSearchBtn').click(function(event){
+	if($('input[name=keyword]').val()==''){
+		alert('검색어를 입력하세요');
+	}else{
+		$.ajax({
+			type : 'post',
+			url : '/springProject/board/getBoardSearch',
+			data : $('#boardListForm').serialize(),
+			dataType : 'json',
+			success : function(data){
+				//alert(JSON.stringify(data));
+				
+				$('#boardListTable tr:gt(0)').remove();
+				
+				$.each(data.list, function(index, items){
+					$('<tr/>').append($('<td/>',{
+						align : 'center',
+						text : items.seq
+					})).append($('<td/>',{
+						
+						}).append($('<a/>',{
+							href : '#',
+							text : items.subject,
+							id : 'subjectA',
+							class : items.seq+''
+						}))
+					
+					).append($('<td/>',{
+						align : 'center',
+						text : items.id
+					})).append($('<td/>',{
+						align : 'center',
+						text : items.logtime
+					})).append($('<td/>',{
+						align : 'center',
+						text : items.hit
+					})).appendTo($('#boardListTable'));
+					
+				});//each
+				
+				//페이징처리
+				$('#boardPagingDiv').html(data.boardPaging.pagingHTML);
+			}
+		});
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

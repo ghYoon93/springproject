@@ -15,8 +15,8 @@
 
 </style>
 
-<form name="imageboardListForm" method="" action="imageboardDelete.do">
-<table border="1" frame="hsides" rules="rows" cellpadding="3">
+<form name="imageboardListForm" action="imageboardDelete.do">
+<table id="imageboardListTable" border="1" frame="hsides" rules="rows" cellpadding="3">
 	<th width="70"><input type="checkbox" id="all" onclick="checkAll()">번호</th>
 	<th width="200">이미지</th>
 	<th width="100">상품명</th>
@@ -31,7 +31,6 @@
 </div>
 <div style="border: 1px red solid; float: left; width: 650px; text-align: center;">${imageboardPaging.pagingHTML }</div>
 
-<script src="../js/jquery-3.4.1.min.js"></script>
 <script>
 function checkAll(){
 	//alert(document.getElementById("all").checked);
@@ -68,44 +67,48 @@ function imageboardPaging(pg){
 	location.href="imageboardList.do?pg="+pg;
 }
 </script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		$.ajax({
-			type: 'post',
-			url: 'springProject/imageboard/getImageboardList',
-			data: 'pg=${pg}',
-			dataType: 'json',
-			success: function(data){
-				//alert(JSON.stringify(data));
-				$.each(data.list, function(index, items){
-					$('<tr/>').append($('<td/>',{
-						align: 'center',
-						text: items.seq
-					})).append($('<td/>',{
-						algin: 'center',
-						
-					}).append($('<img/>',{ 
-						src: '../storage/'+items.image1,
-						style: 'cursor:pointer; width: 70px; height: 70px;'
-						})).apend($('<td/>', {
-						align: 'center',
-						text: items.imageName
-					}))).append($('<td/>',{
-						algin: 'center',
-						text: items.imagePrice
-					})).append($('<td/>', {
-						align: 'center',
-						text: items.imageQty
-					}))append($('<td/>', {
-						align: 'center',
-						text= items.imagePrice* itemsQty
-					})).appendTo($('#imageboardListTable'));
-				});
-			}
-		});
-	});	
-</script>
 
+<script type="text/javascript" src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$.ajax({
+		type : 'post',
+		url : '/springProject/imageboard/getImageboardList',
+		data : 'pg=${pg}',
+		dataType : 'json',
+		success : function(data){
+			//alert(JSON.stringify(data));
+			
+			$.each(data.list, function(index, items){
+				$('<tr/>').append($('<td/>',{
+					align : 'center',
+					text : items.seq
+				})).append($('<td/>',{
+					align : 'center',
+					
+					}).append($('<img/>',{
+						src : '../storage/'+items.image1,
+						style : 'cursor: pointer; width: 70px; height: 70px; '
+					}))
+				
+				).append($('<td/>',{
+					align : 'center',
+					text : items.imageName
+				})).append($('<td/>',{
+					align : 'center',
+					text : items.imagePrice.toLocaleString()
+				})).append($('<td/>',{
+					align : 'center',
+					text : items.imageQty
+				})).append($('<td/>',{
+					align : 'center',
+					text : (items.imagePrice*items.imageQty).toLocaleString()
+				})).appendTo($('#imageboardListTable'));   
+			});
+		}
+	});
+});
+</script>
 
 
 
