@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberSQL">
+	<!-- 아이디 중복체크 -->
+	<select id="isExistId" parameterType="String" resultType="member">
+		select * from member where id=#{id}
+	</select>
+	
+	<insert id="write" parameterType="member">
+		insert into member values(#{name }
+								, #{id }
+								, #{pwd }
+								, #{gender }
+								, #{email1 }
+								, #{email2 }
+								, #{tel1 }
+								, #{tel2 }
+								, #{tel3 }
+								, #{zipcode }
+								, #{addr1 }
+								, #{addr2 }
+								, SYSDATE)
+	</insert>
+	
+	<select id="login" parameterType="java.util.Map" resultType="member">
+		SELECT * FROM MEMBER WHERE id=#{id} AND pwd=#{pwd}
+	</select>
+	
+	<select id="postSearch" parameterType="java.util.Map" resultType="zipcode">
+		SELECT * FROM newzipcode 
+      	WHERE sido LIKE '%'||#{sido}||'%' 
+        	  AND NVL(sigungu,'0') LIKE '%'||#{sigungu}||'%' 
+              AND roadname LIKE '%'||#{roadname}||'%' 
+	</select>
+	
+	<select id="getMember" parameterType="String" resultType="member">
+    	SELECT * FROM member WHERE id=#{id}
+  	</select>
+  	
+  	<update id="modify" parameterType="member">
+  		UPDATE member SET name=#{name }
+  						, pwd=#{pwd }
+  						, gender=#{gender }
+  						, email1=#{email1 }
+  						, email2=#{email2 }
+  						, tel1=#{tel1 }
+  						, tel2=#{tel2 }
+  						, tel3=#{tel3 }
+  						, zipcode=#{zipcode }
+  						, addr1=#{addr1 }
+  						, addr2=#{addr2 }
+  						, logtime=SYSDATE
+     	WHERE id=#{id}
+  	</update>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
